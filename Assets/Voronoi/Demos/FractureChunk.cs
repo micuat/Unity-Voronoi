@@ -17,26 +17,30 @@ public class FractureChunk : MonoBehaviour
 
 	public bool separated = false;
 
-	Vector3 prevAngularVelocity, prevVelocity;
+	float forceAccumulation = 0.0f;
 
 	public void ApplyForce(Vector3 impactPoint)
 	{
-		separated = true;
-
-		if(!rigidbody) {
-			Rigidbody rigidBody = gameObject.AddComponent<Rigidbody>();
-			rigidbody.useGravity = false;
-			rigidBody.mass = 1;
-			rigidbody.drag = 1f;
-			rigidbody.angularDrag = 1f;
-			rigidbody.AddForce(new Vector3(0,-100,0));
-			float d = 1.0f;
-			rigidbody.AddTorque(new Vector3(-cell.site.y, 0, cell.site.x).normalized * Random.Range(1.0f, 10.0f) * 10 + new Vector3(Random.Range(-d,d), 0, Random.Range(-d,d)) * 3);
-			
-			prevVelocity = rigidbody.velocity;
-			prevAngularVelocity = rigidbody.angularVelocity;
-		}
 		GetComponent<MeshFilter>().sharedMesh = meshDouble;
+
+		forceAccumulation += 1;
+		float d = 5.0f;
+		transform.Rotate (new Vector3(Random.Range(-d, d), Random.Range(-d, d), Random.Range(-d, d)));
+
+		if(forceAccumulation >= 2) {
+			separated = true;
+
+ 			if(!rigidbody) {
+				Rigidbody rigidBody = gameObject.AddComponent<Rigidbody>();
+				rigidbody.useGravity = false;
+				rigidBody.mass = 1;
+				rigidbody.drag = 1f;
+				rigidbody.angularDrag = 1f;
+				rigidbody.AddForce(new Vector3(0,-100,0));
+				//float d = 1.0f;
+				rigidbody.AddTorque(new Vector3(-cell.site.y, 0, cell.site.x).normalized * Random.Range(1.0f, 10.0f) * 10 + new Vector3(Random.Range(-d,d), 0, Random.Range(-d,d)) * 3);
+			}
+		}
 	}
 
 	void Update()
@@ -60,7 +64,7 @@ public class FractureChunk : MonoBehaviour
 			List<Vector2> uvs = new List<Vector2>();
 			List<int> triangles = new List<int>();
 			
-			Vector3 vThickness = new Vector3(0, -0.2f, 0);
+			Vector3 vThickness = new Vector3(0, -0.1f, 0);
 
 			vertices.Add(cell.site.ToVector3() - transform.position);
 			normals.Add (new Vector3(0,0,1));

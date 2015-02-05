@@ -142,7 +142,6 @@ namespace UnityOSC
 						
 						PacketReceivedEvent(this, _lastReceivedPacket);	
 					}
-
 				}
 			}
 			catch{

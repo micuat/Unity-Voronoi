@@ -8,17 +8,19 @@ using Cell = Voronoi.Cell;
 namespace Haptic {
 	public class HapticHandler
 	{
-		private float impactTime = -1;
+		public float impactTime = -1;
 		List<GameObject> chunks;
 		private Bounds bounds;
 		private Vector3 impactPoint;
+		public int id;
 
-		public HapticHandler(List<GameObject> chunks, Bounds bounds, Vector3 impactPoint) {
+		public HapticHandler(List<GameObject> chunks, Bounds bounds, Vector3 impactPoint, int id) {
 			impactTime = Time.timeSinceLevelLoad;
 
 			this.chunks = chunks;
 			this.bounds = bounds;
 			this.impactPoint = impactPoint;
+			this.id = id;
 
 			foreach (GameObject chunk in chunks)
 			{

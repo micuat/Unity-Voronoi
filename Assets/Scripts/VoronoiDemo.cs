@@ -52,15 +52,20 @@ public class VoronoiDemo : MonoBehaviour
 		{
 			if(packet.Address.Equals("/niw/client/aggregator/floorcontact")) {
 				if(string.Compare((string)packet.Data[0], "add") == 0) {
+					if(handlers.Count > 0 && handlers[handlers.Count-1].id == (int)packet.Data[1]) {
+						// too early; ignore
+						break;
+					}
+
 					float x = Mathf.Lerp (bounds.min.x, bounds.max.x, (float)packet.Data[2] / 6.0f);
 					float y = Mathf.Lerp (bounds.min.z, bounds.max.z, (float)packet.Data[3] / 6.0f);
-					handlers.Add(new HapticHandler(chunks, bounds, new Vector3(x, 0, y)));
+					handlers.Add(new HapticHandler(chunks, bounds, new Vector3(x, 0, y), (int)packet.Data[1]));
 				}
 			}
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			handlers.Add(new HapticHandler(chunks, bounds, new Vector3(Random.Range (-2.4f, 2.4f), 0, Random.Range (-2.4f, 2.4f))));
+			handlers.Add(new HapticHandler(chunks, bounds, new Vector3(Random.Range (-2.4f, 2.4f), 0, Random.Range (-2.4f, 2.4f)), -Random.Range(1, 10000)));
 		}
 		if (Input.GetKeyDown(KeyCode.C))
         {
