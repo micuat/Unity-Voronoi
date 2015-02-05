@@ -7,7 +7,7 @@ namespace Voronoi
 {
     public class FortuneVoronoi
     {
-        public static readonly float EPSILON = 1e-1f;
+        public static readonly float EPSILON = 1e-5f;
 
         protected List<Edge> edges;
         protected List<Cell> cells;

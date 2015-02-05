@@ -1,14 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Voronoi\Demos\VoronoiDemo.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/OSCHandler.cs">
     <Files>
-      <File FileName="Assets\Voronoi\Demos\VoronoiDemo.cs" Line="199" Column="51" />
-      <File FileName="Assets\Voronoi\Demos\FractureChunk.cs" Line="23" Column="6" />
-      <File FileName="Assets\Voronoi\Graph\Point.cs" Line="1" Column="1" />
-      <File FileName="Assets\Voronoi\Graph\HalfEdge.cs" Line="10" Column="27" />
-      <File FileName="Assets\Voronoi\Graph\Cell.cs" Line="43" Column="46" />
-      <File FileName="Assets\Voronoi\Demos\Color.shader" Line="16" Column="4" />
-      <File FileName="Assets\Voronoi\Graph\Edge.cs" Line="26" Column="38" />
+      <File FileName="Assets/Scripts/VoronoiDemo.cs" Line="62" Column="72" />
+      <File FileName="Assets/Scripts/HapticHandler/HapticHandler.cs" Line="6" Column="27" />
+      <File FileName="Assets/Scripts/Homography.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/BackgroundRenderBasic.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/FlipCamera.cs" Line="17" Column="2" />
+      <File FileName="Assets/Scripts/OSCHandler.cs" Line="295" Column="17" />
+      <File FileName="Assets/Scripts/OSC/OSCPacket.cs" Line="31" Column="2" />
+      <File FileName="../../Library/Unity/tutorial01/Assets/Scripts/SeatController.cs" Line="30" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
