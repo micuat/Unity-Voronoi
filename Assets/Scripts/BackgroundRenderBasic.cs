@@ -50,10 +50,10 @@ public class BackgroundRenderBasic : MonoBehaviour
 				DrawLine(screenshot, i * width / n - 1, 0, i * width / n - 1, height, Color.red);
 				DrawLine(screenshot, i * width / n, 0, i * width / n, height, Color.red);
 				DrawLine(screenshot, i * width / n + 1, 0, i * width / n + 1, height, Color.red);
+				
+				screenshot.Apply();
 			}
 		}
-
-        screenshot.Apply();
 
         foreach (GameObject renderObject in renderObjects)
         {

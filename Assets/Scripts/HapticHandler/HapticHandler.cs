@@ -26,12 +26,8 @@ namespace Haptic {
 				float length = 2.0f * 2.4f / 6.0f;
 				//float length = Mathf.Min((Time.timeSinceLevelLoad - impactTime)*2, 2.0f * 2.4f / 6.0f);
 				bool s = (cell.site.ToVector3() - bounds.center - impactPoint).magnitude < length;
-				chunk.GetComponent<FractureChunk>().separated = s;
-				chunk.GetComponent<FractureChunk>().Update();
+				if(s) chunk.GetComponent<FractureChunk>().ApplyForce(impactPoint);
 			}
-		}
-
-		public void Update() {
 		}
 	}
 }

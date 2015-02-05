@@ -48,45 +48,24 @@ public class VoronoiDemo : MonoBehaviour
 		OSCHandler.Instance.UpdateLogs();
 		servers = OSCHandler.Instance.Servers;
 		 
-		foreach (KeyValuePair<string, ServerLog> item in servers)
+		foreach(OSCPacket packet in servers["Texture"].packets)
 		{
-			foreach(OSCPacket packet in item.Value.packets)
-			{
-				if(packet.Address.Equals("/niw/client/aggregator/floorcontact")) {
-					if(string.Compare((string)packet.Data[0], "add") == 0) {
-						if((float)packet.Data[4] > 20000) {
-							float x = Mathf.Lerp (bounds.min.x, bounds.max.x, (float)packet.Data[2] / 6.0f);
-							float y = Mathf.Lerp (bounds.min.z, bounds.max.z, (float)packet.Data[3] / 6.0f);
-//							float x = (float)packet.Data[2] / 6.0f * 2.4f;
-//							float y = (float)packet.Data[3] / 6.0f * 2.4f;
-							handlers.Add(new HapticHandler(chunks, bounds, new Vector3(x,0,y)));
-						}
-					}
+			if(packet.Address.Equals("/niw/client/aggregator/floorcontact")) {
+				if(string.Compare((string)packet.Data[0], "add") == 0) {
+					float x = Mathf.Lerp (bounds.min.x, bounds.max.x, (float)packet.Data[2] / 6.0f);
+					float y = Mathf.Lerp (bounds.min.z, bounds.max.z, (float)packet.Data[3] / 6.0f);
+					handlers.Add(new HapticHandler(chunks, bounds, new Vector3(x, 0, y)));
 				}
 			}
 		}
 
-		if (graph) {
-			foreach( var h in handlers) {
-				h.Update();
-			}
-		}
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			handlers.Add(new HapticHandler(chunks, bounds, new Vector3(Random.Range (-2.4f, 2.4f), 0, Random.Range (-2.4f, 2.4f))));
 		}
-		if (Input.GetKeyDown(KeyCode.G))
+		if (Input.GetKeyDown(KeyCode.C))
         {
-            CreateSites(true, false);
-			CreateChunks();
+			handlers.Clear();
         }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RelaxSites(1);
-        }
-		if (Input.GetKeyDown(KeyCode.M) && graph)
-		{
-			CreateChunks();
-		}
     }
 
 	void CreateChunks()
@@ -101,11 +80,11 @@ public class VoronoiDemo : MonoBehaviour
 		foreach (Cell cell in graph.cells)
 		{
 			GameObject chunk = Instantiate(chunkObj, cell.site.ToVector3(), Quaternion.identity) as GameObject;
+			chunk.layer = 8; // interObjects
             chunk.name = "Chunk " + cell.site.id;
 			chunk.GetComponent<FractureChunk>().cell = cell;
 			chunks.Add(chunk);
 
-			chunk.GetComponent<FractureChunk>().separated = false;
 			chunk.GetComponent<FractureChunk>().CreateFanMesh();
 			chunk.transform.position = cell.site.ToVector3() + new Vector3(0,bounds.center.y,0);
 		}
