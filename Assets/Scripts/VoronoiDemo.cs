@@ -71,7 +71,9 @@ public class VoronoiDemo : MonoBehaviour
         {
 			handlers.Clear();
         }
-    }
+		if (Input.GetKey("escape"))
+			Application.Quit();
+	}
 
 	void CreateChunks()
 	{

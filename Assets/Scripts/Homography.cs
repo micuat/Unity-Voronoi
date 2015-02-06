@@ -28,8 +28,6 @@ public class Homography : MonoBehaviour {
     Vector3[] vertices;
     public Matrix4x4 matrix;
 
-	public BackgroundRenderBasic target;
-
 	public string fileName;
 
 	public Vector3 offset;
@@ -41,8 +39,6 @@ public class Homography : MonoBehaviour {
 	void Start () {
         Mesh mesh = GetComponent<MeshFilter>().mesh;
         vertices = mesh.vertices;
-
-		target.addGameObject(gameObject);
 
 		// load xml
 		TextAsset xmlTextAsset = Instantiate(Resources.Load(fileName)) as TextAsset;
