@@ -94,8 +94,9 @@ public class OSCHandler : MonoBehaviour
         //Initialize OSC clients (transmitters)
         //Example:
 		CreateClient("NiwServer", IPAddress.Parse("192.168.5.81"), 14923);
+		CreateClient("IceServer", IPAddress.Parse("192.168.5.81"), 8004);
 
-        //Initialize OSC servers (listeners)
+		//Initialize OSC servers (listeners)
         //Example:
 
         CreateServer("Texture", 14923);

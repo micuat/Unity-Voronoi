@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 using Voronoi;
 
+using UnityOSC;
+
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshCollider))]
@@ -40,6 +42,11 @@ public class FractureChunk : MonoBehaviour
 				//float d = 1.0f;
 				rigidbody.AddTorque(new Vector3(-cell.site.y, 0, cell.site.x).normalized * Random.Range(1.0f, 10.0f) * 10 + new Vector3(Random.Range(-d,d), 0, Random.Range(-d,d)) * 3);
 			}
+
+			List<float> args = new List<float>();
+			args.Add(Mathf.Lerp (0, 6, (transform.position.x+2.4f)/4.8f));
+			args.Add(Mathf.Lerp (0, 6, (transform.position.z+2.4f)/4.8f));
+			OSCHandler.Instance.SendMessageToClient("IceServer", "/niw/ice/shatter", args);
 		}
 	}
 
