@@ -14,8 +14,8 @@
 		LOD 300
 		
 		CGPROGRAM
-			#pragma surface surf BlinnPhong decal:add nolightmap
-			
+//			#pragma surface surf BlinnPhong decal:add nolightmap
+			#pragma surface surf SimpleSpecular decal:add
 			samplerCUBE _Cube;
 			
 			fixed4 _ReflectColor;
@@ -26,30 +26,28 @@
 				float3 viewDir;
 			};
 			
-//			half4 LightingSimpleSpecular (SurfaceOutput s, half3 lightDir, half3 viewDir, half atten) {
-//				half3 h = normalize (lightDir + viewDir);
-//
-//				half diff = max (0, dot (s.Normal, lightDir));
-//
-//				float nh = max (0, dot (s.Normal, h));
-//				float spec = pow (nh, 48.0);
-//
-//				half4 c;
-//				c.rgb = s.Albedo;//(s.Albedo * _LightColor0.rgb * diff + _LightColor0.rgb * spec) * (atten * 2);
-//				c.a = s.Alpha;
-//				if(abs(dot(lightDir, s.Normal)) > 0.9) c = half4(1,1,1,1);
-//				return c;
-//			}
-			
+			half4 LightingSimpleSpecular (SurfaceOutput s, half3 lightDir, half3 viewDir, half atten) {
+				half3 h = normalize (lightDir + viewDir);
+
+				half diff = max (0, dot (s.Normal, lightDir));
+
+				float nh = max (0, dot (s.Normal, h));
+				float spec = pow (nh, 4.0);
+
+				half4 c;
+				c.rgb = (s.Albedo * _LightColor0.rgb * diff + _LightColor0.rgb * spec) * (atten * 2);
+				c.a = s.Alpha;
+				return c;
+			}
+ 			
 			void surf (Input IN, inout SurfaceOutput o) {
 				o.Albedo = 0;
 				o.Gloss = 1;
 				o.Specular = _Shininess;
 				
 				fixed4 reflcol = texCUBE (_Cube, IN.worldRefl);
-				o.Emission = reflcol.rgb * _ReflectColor.rgb;
-				if( abs(dot(float3(1,1,1), o.Normal)) < 0.1 )
-					o.Emission = float4(1,1,1,1);
+				o.Albedo = reflcol.rgb * _ReflectColor.rgb;
+//				o.Emission = reflcol.rgb * _ReflectColor.rgb;
 		 		o.Alpha = reflcol.a * _ReflectColor.a;
 			}
 		ENDCG

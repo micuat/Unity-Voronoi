@@ -34,8 +34,8 @@ public class FractureChunk : MonoBehaviour
 				Rigidbody rigidBody = gameObject.AddComponent<Rigidbody>();
 				rigidbody.useGravity = false;
 				rigidBody.mass = 1;
-				rigidbody.drag = 1f;
-				rigidbody.angularDrag = 1f;
+				rigidbody.drag = 0.1f;
+				rigidbody.angularDrag = 0.01f;
 				rigidbody.AddForce(new Vector3(0,-100,0));
 				//float d = 1.0f;
 				rigidbody.AddTorque(new Vector3(-cell.site.y, 0, cell.site.x).normalized * Random.Range(1.0f, 10.0f) * 10 + new Vector3(Random.Range(-d,d), 0, Random.Range(-d,d)) * 3);
@@ -45,6 +45,13 @@ public class FractureChunk : MonoBehaviour
 
 	void Update()
 	{
+		if(separated) {
+			transform.localScale -= new Vector3(0.01f, 0.01f, 0.01f);
+			renderer.material.SetColor("_ReflectColor", renderer.material.GetColor("_ReflectColor") - new Color(0.01f,0.01f,0.01f,0.01f));
+			if(transform.localScale.x == 0.0f) {
+				renderer.enabled = false;
+			}
+		}
 	}
 
 	public void CreateFanMesh()
@@ -67,13 +74,13 @@ public class FractureChunk : MonoBehaviour
 			Vector3 vThickness = new Vector3(0, -0.1f, 0);
 
 			vertices.Add(cell.site.ToVector3() - transform.position);
-			normals.Add (new Vector3(0,0,1));
+			normals.Add (new Vector3(0,1,0));
 			uvs.Add(vertices[0]);
 
 			for (int v = 1; v < numSideVerts; v++)
 			{
 				vertices.Add(cell.halfEdges[v-1].GetStartPoint().ToVector3() - transform.position);// * 0.98f;
-				normals.Add (new Vector3(0,0,1));
+				normals.Add (new Vector3(0,1,0));
 				uvs.Add (vertices[v]);
 				triangles.Add (0);
 				triangles.Add (v);
@@ -81,13 +88,13 @@ public class FractureChunk : MonoBehaviour
 			}
 
 			vertices.Add (cell.site.ToVector3() - transform.position + vThickness);
-			normals.Add (new Vector3(0,0,-1));
+			normals.Add (new Vector3(0,-1,0));
 			uvs.Add (vertices[numSideVerts]);
 
 			for (int v = 1, t = 1; v < numSideVerts; v++, t += 3)
 			{
 				vertices.Add (vertices[v] + vThickness);
-				normals.Add (new Vector3(0,0,-1));
+				normals.Add (new Vector3(0,-1,0));
 				uvs.Add (vertices[v + numSideVerts]);
 				triangles.Add (v % (numSideVerts-1) + numSideVerts + 1);
 				triangles.Add (v + numSideVerts);
