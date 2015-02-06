@@ -157,7 +157,7 @@ namespace UnityOSC
 			while( true )
 			{
 				Receive();
-                Thread.Sleep(10);
+//                Thread.Sleep(1);
 			}
 		}
 		#endregion
