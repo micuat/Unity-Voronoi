@@ -13,6 +13,7 @@ Properties {
 	_MainTex ("Fallback texture", 2D) = "" {}
 	_ReflectionTex ("Internal Reflection", 2D) = "" {}
 	_RefractionTex ("Internal Refraction", 2D) = "" {}
+	_Center ("Ripple center", Vector) = (0, 0, 0, 0)
 }
 
 
@@ -110,6 +111,7 @@ uniform float4 _RefrColor;
 uniform float4 _HorizonColor;
 #endif
 sampler2D _BumpMap;
+uniform float4 _Center;
 
 half4 frag( v2f i ) : SV_Target
 {
@@ -121,9 +123,9 @@ half4 frag( v2f i ) : SV_Target
 	half3 bump = (bump1 + bump2) * 0.5;
 	
 	float4 n;
-	float2 center = float2(0.5f, 0.5f);
+	float2 impact = i.ripple.xz - _Center.xz;
 //	n.x = sin(length(o.pos.xz - center) - _Time.y * 16) * 0.5f / (length(o.pos.xy - center) * 32 + 2) + 0.5f;
-	n.x = sin(length(i.ripple.xz * 30 - center) * 1 - _Time.y * 16) * 0.5f * (exp(-length(i.ripple.xz - center))) + 0.5f;
+	n.x = sin(length(impact) * 32 - _Time.y * 16) * 0.5f * (exp(-length(impact) * 1.2)) + 0.5f;
 	n.y = n.x;
 	n.z = n.x;
 	n.w = n.x;

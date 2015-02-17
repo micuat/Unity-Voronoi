@@ -14,7 +14,7 @@ namespace Haptic {
 		private Vector3 impactPoint;
 		public int id;
 
-		public HapticHandler(List<GameObject> chunks, Bounds bounds, Vector3 impactPoint, int id) {
+		public HapticHandler(List<GameObject> chunks, Bounds bounds, Vector3 impactPoint, int id, VoronoiDemo voro) {
 			impactTime = Time.timeSinceLevelLoad;
 
 			this.chunks = chunks;
@@ -30,6 +30,8 @@ namespace Haptic {
 				bool s = (cell.site.ToVector3() - bounds.center - impactPoint).magnitude < length;
 				if(s) chunk.GetComponent<FractureChunk>().ApplyForce(impactPoint);
 			}
+
+			voro.waterMaterial.SetVector("_Center", impactPoint);
 		}
 	}
 }

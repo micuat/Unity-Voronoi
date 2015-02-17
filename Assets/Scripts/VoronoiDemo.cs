@@ -27,6 +27,8 @@ public class VoronoiDemo : MonoBehaviour
 
 	private Dictionary<string, ServerLog> servers;
 
+	public Material waterMaterial;
+
     void Start()
     {
         sites = new List<Point>();
@@ -41,6 +43,9 @@ public class VoronoiDemo : MonoBehaviour
 		servers = new Dictionary<string, ServerLog>();
 
 		//OSCHandler.Instance.SendMessageToClient("NiwServer", "/niw/server/config/invert/low/avg/zero", 0);
+
+		GameObject water = GameObject.Find ("Daylight Water");
+		waterMaterial = water.renderer.sharedMaterial;
 	}
 
     void Update()
@@ -59,13 +64,13 @@ public class VoronoiDemo : MonoBehaviour
 
 					float x = Mathf.Lerp (bounds.min.x, bounds.max.x, (float)packet.Data[2] / 6.0f);
 					float y = Mathf.Lerp (bounds.min.z, bounds.max.z, (float)packet.Data[3] / 6.0f);
-					handlers.Add(new HapticHandler(chunks, bounds, new Vector3(x, 0, y), (int)packet.Data[1]));
+					handlers.Add(new HapticHandler(chunks, bounds, new Vector3(x, 0, y), (int)packet.Data[1], this));
 				}
 			}
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			handlers.Add(new HapticHandler(chunks, bounds, new Vector3(Random.Range (-2.4f, 2.4f), 0, Random.Range (-2.4f, 2.4f)), -Random.Range(1, 10000)));
+			handlers.Add(new HapticHandler(chunks, bounds, new Vector3(Random.Range (-2.4f, 2.4f), 0, Random.Range (-2.4f, 2.4f)), -Random.Range(1, 10000), this));
 		}
 		if (Input.GetKeyDown(KeyCode.C))
         {
