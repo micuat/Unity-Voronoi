@@ -24,6 +24,8 @@ Subshader {
 	Tags { "WaterMode"="Refractive" "RenderType"="Opaque" }
 	Pass {
 CGPROGRAM
+// Upgrade NOTE: excluded shader from DX11 and Xbox360; has structs without semantics (struct v2f members ripple)
+#pragma exclude_renderers d3d11 xbox360
 #pragma vertex vert
 #pragma fragment frag
 #pragma fragmentoption ARB_precision_hint_fastest 
@@ -56,6 +58,7 @@ struct appdata {
 
 struct v2f {
 	float4 pos : SV_POSITION;
+	float4 ripple;
 	#if defined(HAS_REFLECTION) || defined(HAS_REFRACTION)
 		float4 ref : TEXCOORD0;
 		float2 bumpuv0 : TEXCOORD1;
@@ -87,6 +90,8 @@ v2f vert(appdata v)
 	o.ref = ComputeScreenPos(o.pos);
 	#endif
 	
+	o.ripple = v.vertex;
+	
 	return o;
 }
 
@@ -114,6 +119,16 @@ half4 frag( v2f i ) : SV_Target
 	half3 bump1 = UnpackNormal(tex2D( _BumpMap, i.bumpuv0 )).rgb;
 	half3 bump2 = UnpackNormal(tex2D( _BumpMap, i.bumpuv1 )).rgb;
 	half3 bump = (bump1 + bump2) * 0.5;
+	
+	float4 n;
+	float2 center = float2(0.5f, 0.5f);
+//	n.x = sin(length(o.pos.xz - center) - _Time.y * 16) * 0.5f / (length(o.pos.xy - center) * 32 + 2) + 0.5f;
+	n.x = sin(length(i.ripple.xz * 30 - center) * 1 - _Time.y * 16) * 0.5f * (exp(-length(i.ripple.xz - center))) + 0.5f;
+	n.y = n.x;
+	n.z = n.x;
+	n.w = n.x;
+
+	bump += UnpackNormal(n).rgb;
 	
 	// fresnel factor
 	half fresnelFac = dot( i.viewDir, bump );
