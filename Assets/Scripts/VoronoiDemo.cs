@@ -28,6 +28,7 @@ public class VoronoiDemo : MonoBehaviour
 	private Dictionary<string, ServerLog> servers;
 
 	public Material waterMaterial;
+	public int waterCounter = 0;
 
     void Start()
     {
@@ -46,6 +47,10 @@ public class VoronoiDemo : MonoBehaviour
 
 		GameObject water = GameObject.Find ("Daylight Water");
 		waterMaterial = water.renderer.sharedMaterial;
+
+		for (int i = 0; i < 16; i++) {
+			waterMaterial.SetVector(System.String.Concat("_Center", System.Convert.ToString(i)), new Vector4(0, 0, 0, -1000));
+		}
 	}
 
     void Update()

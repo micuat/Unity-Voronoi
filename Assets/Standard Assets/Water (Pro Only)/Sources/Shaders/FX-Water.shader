@@ -13,7 +13,22 @@ Properties {
 	_MainTex ("Fallback texture", 2D) = "" {}
 	_ReflectionTex ("Internal Reflection", 2D) = "" {}
 	_RefractionTex ("Internal Refraction", 2D) = "" {}
-	_Center ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center0 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center1 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center2 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center3 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center4 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center5 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center6 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center7 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center8 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center9 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center10 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center11 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center12 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center13 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center14 ("Ripple center", Vector) = (0, 0, 0, 0)
+	_Center15 ("Ripple center", Vector) = (0, 0, 0, 0)
 }
 
 
@@ -39,6 +54,7 @@ CGPROGRAM
 #define HAS_REFRACTION 1
 #endif
 
+#pragma target 3.0
 
 #include "UnityCG.cginc"
 
@@ -111,7 +127,22 @@ uniform float4 _RefrColor;
 uniform float4 _HorizonColor;
 #endif
 sampler2D _BumpMap;
-uniform float4 _Center;
+uniform float4 _Center0;
+uniform float4 _Center1;
+uniform float4 _Center2;
+uniform float4 _Center3;
+uniform float4 _Center4;
+uniform float4 _Center5;
+uniform float4 _Center6;
+uniform float4 _Center7;
+uniform float4 _Center8;
+uniform float4 _Center9;
+uniform float4 _Center10;
+uniform float4 _Center11;
+uniform float4 _Center12;
+uniform float4 _Center13;
+uniform float4 _Center14;
+uniform float4 _Center15;
 
 half4 frag( v2f i ) : SV_Target
 {
@@ -123,16 +154,82 @@ half4 frag( v2f i ) : SV_Target
 	half3 bump = (bump1 + bump2) * 0.5;
 	
 	float4 n;
-	float2 impact = i.ripple.xz - _Center.xz;
-	half tDiff = _Time.y - _Center.w;
+	half impact = length(i.ripple.xz - _Center0.xz);
+	half tDiff = _Time.y - _Center0.w;
 	if( tDiff > 1 )
 		tDiff = 1;
-	n.x = sin(length(impact) * 32 - _Time.y * 16) * 0.5f * (exp(-length(impact) * 1.2)) * (1 - tDiff) + 0.5f;
+	n.x = sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (1 - tDiff);
+	
+	impact = length(i.ripple.xz - _Center1.xz);
+	tDiff = _Time.y - _Center1.w;
+	if( tDiff > 1 )
+		tDiff = 1;
+	n.x += sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (1 - tDiff);
+	
+	impact = length(i.ripple.xz - _Center2.xz);
+	tDiff = _Time.y - _Center2.w;
+	if( tDiff > 1 )
+		tDiff = 1;
+	n.x += sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (1 - tDiff);
+	
+	impact = length(i.ripple.xz - _Center3.xz);
+	tDiff = _Time.y - _Center3.w;
+	if( tDiff > 1 )
+		tDiff = 1;
+	n.x += sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (1 - tDiff);
+	
+	n.x = n.x * 0.25f + 0.5f;
+	
 	n.y = n.x;
 	n.z = n.x;
 	n.w = n.x;
 
 	bump += UnpackNormal(n).rgb;
+	
+//	impact = length(i.ripple.xz - _Center4.xz);
+//	tDiff = _Time.y - _Center4.w;
+//	if( tDiff > 1 )
+//		tDiff = 1;
+//	n.x = sin(impact * 32 - _Time.y * 16) * 0.5f * (exp(-impact * 1.2)) * (1 - tDiff) + 0.5f;
+//	n.y = n.x;
+//	n.z = n.x;
+//	n.w = n.x;
+//
+//	bump += UnpackNormal(n).rgb;
+//	
+//	impact = length(i.ripple.xz - _Center5.xz);
+//	tDiff = _Time.y - _Center5.w;
+//	if( tDiff > 1 )
+//		tDiff = 1;
+//	n.x = sin(impact * 32 - _Time.y * 16) * 0.5f * (exp(-impact * 1.2)) * (1 - tDiff) + 0.5f;
+//	n.y = n.x;
+//	n.z = n.x;
+//	n.w = n.x;
+//
+//	bump += UnpackNormal(n).rgb;
+//	
+//		impact = length(i.ripple.xz - _Center6.xz);
+//	tDiff = _Time.y - _Center6.w;
+//	if( tDiff > 1 )
+//		tDiff = 1;
+//	n.x = sin(impact * 32 - _Time.y * 16) * 0.5f * (exp(-impact * 1.2)) * (1 - tDiff) + 0.5f;
+//	n.y = n.x;
+//	n.z = n.x;
+//	n.w = n.x;
+//
+//	bump += UnpackNormal(n).rgb;
+//	
+//	impact = length(i.ripple.xz - _Center7.xz);
+//	tDiff = _Time.y - _Center7.w;
+//	if( tDiff > 1 )
+//		tDiff = 1;
+//	n.x = sin(impact * 32 - _Time.y * 16) * 0.5f * (exp(-impact * 1.2)) * (1 - tDiff) + 0.5f;
+//	n.y = n.x;
+//	n.z = n.x;
+//	n.w = n.x;
+//
+//	bump += UnpackNormal(n).rgb;
+
 	
 	// fresnel factor
 	half fresnelFac = dot( i.viewDir, bump );

@@ -36,7 +36,8 @@ namespace Haptic {
 			impactShader.y = impactPoint.y;
 			impactShader.z = impactPoint.z;
 			impactShader.w = Time.time;
-			voro.waterMaterial.SetVector("_Center", impactShader);
+			voro.waterMaterial.SetVector(System.String.Concat("_Center", System.Convert.ToString(voro.waterCounter)), impactShader);
+			voro.waterCounter = (voro.waterCounter + 1) % 4;
 		}
 	}
 }
