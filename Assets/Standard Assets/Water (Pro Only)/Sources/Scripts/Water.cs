@@ -141,27 +141,6 @@ public class Water : MonoBehaviour
 			Shader.EnableKeyword( "WATER_REFRACTIVE" );
 			break;
 		}
-
-//		int w = 512, h = 512;
-//		bumpMap = new Texture2D(w, h, TextureFormat.ARGB32, false);
-//		for(int i = 0; i < h; i++) {
-//			for(int j = 0; j < w; j++) {
-////				float gray = Mathf.PerlinNoise((float)i/h * 1.0f, (float)j/w * 1.0f) +
-////					Mathf.PerlinNoise((float)i/h * 32.0f, (float)j/w * 32.0f);
-////				gray *= 0.5f;
-////				gray = 1 - gray;
-////				gray *= gray;
-////				gray = 1 - gray;
-////				gray *= 0.5f * Mathf.Sin(Time.timeSinceLevelLoad) + 0.5f;
-//				float r = Mathf.Sqrt(((float)i/h - 0.5f) * ((float)i/h - 0.5f) + ((float)j/w - 0.5f) * ((float)j/w - 0.5f));
-//				float gray = Mathf.Sin (Time.timeSinceLevelLoad + r * 32.0f);
-//				gray = gray * 0.5f + 0.5f;
-//				bumpMap.SetPixel(j, i, new Color(gray, gray, gray, 1.0f));
-//			}
-//		}		 
-//		bumpMap.Apply();
-//		
-//		renderer.sharedMaterial.SetTexture("_BumpMap", bumpMap);
 			
 		s_InsideWater = false;
 	}

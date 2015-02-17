@@ -31,7 +31,12 @@ namespace Haptic {
 				if(s) chunk.GetComponent<FractureChunk>().ApplyForce(impactPoint);
 			}
 
-			voro.waterMaterial.SetVector("_Center", impactPoint);
+			Vector4 impactShader = new Vector4 ();
+			impactShader.x = impactPoint.x;
+			impactShader.y = impactPoint.y;
+			impactShader.z = impactPoint.z;
+			impactShader.w = Time.time;
+			voro.waterMaterial.SetVector("_Center", impactShader);
 		}
 	}
 }

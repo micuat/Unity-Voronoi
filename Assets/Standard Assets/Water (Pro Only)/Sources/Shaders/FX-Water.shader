@@ -124,8 +124,10 @@ half4 frag( v2f i ) : SV_Target
 	
 	float4 n;
 	float2 impact = i.ripple.xz - _Center.xz;
-//	n.x = sin(length(o.pos.xz - center) - _Time.y * 16) * 0.5f / (length(o.pos.xy - center) * 32 + 2) + 0.5f;
-	n.x = sin(length(impact) * 32 - _Time.y * 16) * 0.5f * (exp(-length(impact) * 1.2)) + 0.5f;
+	half tDiff = _Time.y - _Center.w;
+	if( tDiff > 1 )
+		tDiff = 1;
+	n.x = sin(length(impact) * 32 - _Time.y * 16) * 0.5f * (exp(-length(impact) * 1.2)) * (1 - tDiff) + 0.5f;
 	n.y = n.x;
 	n.z = n.x;
 	n.w = n.x;
