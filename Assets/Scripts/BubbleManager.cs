@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BubbleManager : MonoBehaviour {
 
-	int dieCount = 3;
+	int dieCount = 10;
 	bool floating = false;
 
 	// Use this for initialization
