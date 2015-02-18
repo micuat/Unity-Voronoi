@@ -30,6 +30,8 @@ public class VoronoiDemo : MonoBehaviour
 	public Material waterMaterial;
 	public int waterCounter = 0;
 
+	public BubbleGenerator bubbleGenerator;
+
     void Start()
     {
         sites = new List<Point>();
@@ -51,6 +53,9 @@ public class VoronoiDemo : MonoBehaviour
 		for (int i = 0; i < 16; i++) {
 			waterMaterial.SetVector(System.String.Concat("_Center", System.Convert.ToString(i)), new Vector4(0, 0, 0, -1000));
 		}
+
+		GameObject bubbles = GameObject.Find ("Bubbles");
+		bubbleGenerator = bubbles.GetComponent<BubbleGenerator> ();
 	}
 
     void Update()
@@ -97,6 +102,7 @@ public class VoronoiDemo : MonoBehaviour
 		foreach (Cell cell in graph.cells)
 		{
 			GameObject chunk = Instantiate(chunkObj, cell.site.ToVector3(), Quaternion.identity) as GameObject;
+			chunk.transform.parent = gameObject.transform;
 			chunk.layer = 8; // interObjects
             chunk.name = "Chunk " + cell.site.id;
 			chunk.GetComponent<FractureChunk>().cell = cell;
