@@ -39,8 +39,8 @@ public class VoronoiDemo : MonoBehaviour
 		chunks = new List<GameObject>();
 		handlers = new List<HapticHandler> ();
 
-		CreateSites(true, false);
-		CreateChunks();
+		//CreateSites(true, false);
+		//CreateChunks();
 
 		OSCHandler.Instance.Init(); //init OSC
 		servers = new Dictionary<string, ServerLog>();

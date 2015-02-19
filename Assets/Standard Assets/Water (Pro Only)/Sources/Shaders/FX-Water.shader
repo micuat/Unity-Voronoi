@@ -156,29 +156,53 @@ half4 frag( v2f i ) : SV_Target
 	float4 n;
 	half impact = length(i.ripple.xz - _Center0.xz);
 	half tDiff = _Time.y - _Center0.w;
-	if( tDiff > 1 )
-		tDiff = 1;
-	n.x = sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (1 - tDiff);
+	if( tDiff > 2 )
+		tDiff = 2;
+	n.x = sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (2 - tDiff);
 	
 	impact = length(i.ripple.xz - _Center1.xz);
 	tDiff = _Time.y - _Center1.w;
-	if( tDiff > 1 )
-		tDiff = 1;
-	n.x += sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (1 - tDiff);
+	if( tDiff > 2 )
+		tDiff = 2;
+	n.x += sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (2 - tDiff);
 	
 	impact = length(i.ripple.xz - _Center2.xz);
 	tDiff = _Time.y - _Center2.w;
-	if( tDiff > 1 )
-		tDiff = 1;
-	n.x += sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (1 - tDiff);
+	if( tDiff > 2 )
+		tDiff = 2;
+	n.x += sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (2 - tDiff);
 	
 	impact = length(i.ripple.xz - _Center3.xz);
 	tDiff = _Time.y - _Center3.w;
-	if( tDiff > 1 )
-		tDiff = 1;
-	n.x += sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (1 - tDiff);
+	if( tDiff > 2 )
+		tDiff = 2;
+	n.x += sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (2 - tDiff);
 	
-	n.x = n.x * 0.25f + 0.5f;
+	impact = length(i.ripple.xz - _Center4.xz);
+	tDiff = _Time.y - _Center4.w;
+	if( tDiff > 2 )
+		tDiff = 2;
+	n.x += sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (2 - tDiff);
+
+	impact = length(i.ripple.xz - _Center5.xz);
+	tDiff = _Time.y - _Center5.w;
+	if( tDiff > 2 )
+		tDiff = 2;
+	n.x += sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (2 - tDiff);
+	
+		impact = length(i.ripple.xz - _Center6.xz);
+	tDiff = _Time.y - _Center6.w;
+	if( tDiff > 2 )
+		tDiff = 2;
+	n.x += sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (2 - tDiff);
+	
+	impact = length(i.ripple.xz - _Center7.xz);
+	tDiff = _Time.y - _Center7.w;
+	if( tDiff > 2 )
+		tDiff = 2;
+	n.x += sin(impact * 32 - _Time.y * 16) * (exp(-impact * 1.2)) * (2 - tDiff);
+
+	n.x = n.x * 0.5f + 0.5f;
 	
 	n.y = n.x;
 	n.z = n.x;
@@ -186,51 +210,7 @@ half4 frag( v2f i ) : SV_Target
 
 	bump += UnpackNormal(n).rgb;
 	
-//	impact = length(i.ripple.xz - _Center4.xz);
-//	tDiff = _Time.y - _Center4.w;
-//	if( tDiff > 1 )
-//		tDiff = 1;
-//	n.x = sin(impact * 32 - _Time.y * 16) * 0.5f * (exp(-impact * 1.2)) * (1 - tDiff) + 0.5f;
-//	n.y = n.x;
-//	n.z = n.x;
-//	n.w = n.x;
-//
-//	bump += UnpackNormal(n).rgb;
-//	
-//	impact = length(i.ripple.xz - _Center5.xz);
-//	tDiff = _Time.y - _Center5.w;
-//	if( tDiff > 1 )
-//		tDiff = 1;
-//	n.x = sin(impact * 32 - _Time.y * 16) * 0.5f * (exp(-impact * 1.2)) * (1 - tDiff) + 0.5f;
-//	n.y = n.x;
-//	n.z = n.x;
-//	n.w = n.x;
-//
-//	bump += UnpackNormal(n).rgb;
-//	
-//		impact = length(i.ripple.xz - _Center6.xz);
-//	tDiff = _Time.y - _Center6.w;
-//	if( tDiff > 1 )
-//		tDiff = 1;
-//	n.x = sin(impact * 32 - _Time.y * 16) * 0.5f * (exp(-impact * 1.2)) * (1 - tDiff) + 0.5f;
-//	n.y = n.x;
-//	n.z = n.x;
-//	n.w = n.x;
-//
-//	bump += UnpackNormal(n).rgb;
-//	
-//	impact = length(i.ripple.xz - _Center7.xz);
-//	tDiff = _Time.y - _Center7.w;
-//	if( tDiff > 1 )
-//		tDiff = 1;
-//	n.x = sin(impact * 32 - _Time.y * 16) * 0.5f * (exp(-impact * 1.2)) * (1 - tDiff) + 0.5f;
-//	n.y = n.x;
-//	n.z = n.x;
-//	n.w = n.x;
-//
-//	bump += UnpackNormal(n).rgb;
 
-	
 	// fresnel factor
 	half fresnelFac = dot( i.viewDir, bump );
 	
